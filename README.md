@@ -5,7 +5,7 @@
 Clone this repo and run them directy with a simple `node` command.
 
 ```bash
-git clone https://github.com/myrepo
+git clone git@github.com:mbadrani/geppetto.git
 cd geppetto
 npm i
 ```
