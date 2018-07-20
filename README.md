@@ -1,14 +1,17 @@
 [![Prestashop](https://i.imgur.com/qDqeQ1E.png)](https://www.prestashop.com)
 
-# How to Install Geppetto project who integrates Puppeteer and Mocha to create tests suits on PrestaShop Shop
-## Puppeteer Headless Chrome Project for real life use cases.
+# How to Install Geppetto project 
 Clone this repo and run them directy with a simple `node` command.
 
 ```bash
-git clone git@github.com:mbadrani/geppetto.git
+git clone https://github.com/myrepo
 cd geppetto
-npm i
+npm i puppeteer
 ```
+This project integrates Puppeteer and Mocha to create tests suits on PrestaShop Shop
+Puppeteer Headless Chrome Project for real life use cases.
+
+Interesting links to begin developping on Puppeteer:
 Non-Regression test
 project puppeteer
 https://github.com/GoogleChrome/puppeteer
