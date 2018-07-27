@@ -1,0 +1,35 @@
+{
+  "name": "geppetto",
+  "version": "1.0.0",
+  "description": "Geppetto is the new test Automation Framework for Prestashop",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "echo \\\"Error: no test specified\\\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/mbadrani/geppetto.git"
+  },
+  "author": "mbadrani",
+  "license": "OSL-3.0",
+  "bugs": {
+    "url": "https://github.com/mbadrani/geppetto/issues"
+  },
+  "homepage": "https://github.com/mbadrani/geppetto#readme",
+  "dependencies": {
+    "puppeteer": "^1.6.0"
+  },
+  "devDependencies": {
+    "chai": "^4.1.2",
+    "differencify": "^1.4.3",
+    "eslint-plugin-mocha": "^5.1.0",
+    "file-system": "^2.2.2",
+    "lodash": "^4.17.10",
+    "mocha": "^5.2.0",
+    "mochawesome": "^3.0.2",
+    "should": "^13.2.1"
+  }
+}
