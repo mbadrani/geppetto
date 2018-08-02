@@ -75,7 +75,7 @@ const installShop = async (debugMode = false) => {
   // Fill the database configuration form
   await page.waitFor(3000);
   await page.$eval('input#dbServer', (el, value) => el.value = value, global.dbServer);
-  await page.$eval('input#dbName', (el, value) => el.value = value, 'database' + global.dataTime);
+  await page.$eval('input#dbName', (el, value) => el.value = value, 'database' + global.dateTime);
   await page.$eval('input#dbLogin', (el, value) => el.value = value, global.dbUser);
   if (global.dbPassword === 'undefined') {
     await page.$eval('input#dbPassword', (el, value) => el.value = value, '');
