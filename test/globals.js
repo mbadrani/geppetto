@@ -1,7 +1,7 @@
 'use strict';
 let argv = require('minimist')(process.argv.slice(2));
 
-global.dataTime = new Date().getTime();
+global.dateTime = new Date().getTime();
 global.firstName = 'Demo';
 global.lastName = 'Prestashop';
 global.email = 'demo@prestashop.com';
