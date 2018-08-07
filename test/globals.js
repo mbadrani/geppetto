@@ -4,8 +4,8 @@ let argv = require('minimist')(process.argv.slice(2));
 global.dateTime = new Date().getTime();
 global.firstName = 'Demo';
 global.lastName = 'Prestashop';
-global.email = 'demo@prestashop.com';
-global.password = 'prestashop_demo';
+global.email = argv.LOGIN || 'demo@prestashop.com';
+global.password = argv.PASSWD || 'prestashop_demo';
 
 global.rcTarget = argv.RC_TARGET;
 global.URL = argv.URL;
