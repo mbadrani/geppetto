@@ -7,7 +7,7 @@
     "test": "test"
   },
   "scripts": {
-    "test": "echo \\\"Error: no test specified\\\" && exit 1"
+    "mocha-test-puppeteer": "node_modules/mocha/bin/mocha test/mocha/campaigns/take_screenshot.js"
   },
   "repository": {
     "type": "git",
