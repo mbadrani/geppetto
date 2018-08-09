@@ -72,13 +72,15 @@ const signInBo = async () => {
 };
 
 const switchShopLanguageInFo = async (language = 'fr') => {
-	await page.waitFor('#_desktop_language_selector button');
-	await page.click('#_desktop_language_selector button');
-	await page.waitFor(1000);
-	if (language === 'en') {
-		await page.click('#_desktop_language_selector li:nth-child(1) > a').then(() => console.log('should switch the Front Office to "English"'));
-	} else {
-		await page.click('#_desktop_language_selector li:nth-child(2) > a').then(() => console.log('should switch the Front Office to "French"'));
-	}
+  await page.waitFor('#_desktop_language_selector button');
+  await page.click('#_desktop_language_selector button');
+  await page.waitFor(1000);
+  await page.click('#_desktop_language_selector a[href *= "' + language + '"]').then(() => {
+    if (language === 'en') {
+      console.log('should switch the Front Office to "English"');
+    } else {
+      console.log('should switch the Front Office to "French"');
+    }
+  });
 };
 checkSearchPage();

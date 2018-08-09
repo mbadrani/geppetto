@@ -13,7 +13,7 @@ const accessToFo = async () => {
   global.page = await pages[0];
 
   await page.tracing.start({
-    path: '9335.json',
+    path: 'trace/9335.json',
     categories: ['devtools.timeline']
   });
 
@@ -23,14 +23,16 @@ const accessToFo = async () => {
 };
 
 const switchShopLanguageInFo = async (language = 'fr') => {
-  await page.waitFor('#_desktop_language_selector > div > div > button');
-  await page.click('#_desktop_language_selector > div > div > button');
+  await page.waitFor('#_desktop_language_selector button');
+  await page.click('#_desktop_language_selector button');
   await page.waitFor(1000);
-  if (language === 'en') {
-    await page.click('#_desktop_language_selector > div > div > ul > li:nth-child(1) > a').then(() => console.log('should switch the Front Office to "English"'));
-  } else {
-    await page.click('#_desktop_language_selector > div > div > ul > li:nth-child(2) > a').then(() => console.log('should switch the Front Office to "French"'));
-  }
+  await page.click('#_desktop_language_selector a[href *= "' + language + '"]').then(() => {
+    if (language === 'en') {
+      console.log('should switch the Front Office to "English"');
+    } else {
+      console.log('should switch the Front Office to "French"');
+    }
+  });
 };
 
 const searchProductInFo = async (productName) => {

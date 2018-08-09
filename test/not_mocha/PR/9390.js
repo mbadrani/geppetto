@@ -12,7 +12,7 @@ const accessToBo = async () => {
   const pages = await browser.pages();
   global.page = await pages[0];
   await page.tracing.start({
-    path: '9390.json',
+    path: 'trace/9390.json',
     categories: ['devtools.timeline']
   });
   await page.goto(global.URL + 'admin-dev');
