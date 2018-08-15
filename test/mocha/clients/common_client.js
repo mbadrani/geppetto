@@ -241,6 +241,11 @@ class CommonClient {
       }
     });
   }
+
+  async isExisting(selector) {
+    const exists = await page.$(selector) !== null;
+    expect(exists).to.be.true;
+  }
 }
 
 module.exports = CommonClient;

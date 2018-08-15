@@ -9,6 +9,7 @@ module.exports = {
     language_FR: '#_desktop_language_selector li:nth-child(2) > a',
     sign_in_button: '#_desktop_user_info span',
     order_history_and_details_button: '#history-link',
-    sign_out_button: '#_desktop_user_info  a.logout'
+    sign_out_button: '#_desktop_user_info  a.logout',
+    logo_home_page: '#_desktop_logo  img',
   }
 };
