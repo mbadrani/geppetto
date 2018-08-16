@@ -7,7 +7,7 @@ const takeScreenshot = async err => await this.client.screenshot('error').then((
 });
 
 global.test = (name, instructions) => it(name, () => {
-  return instructions().catch();
+  return instructions().catch(takeScreenshot);
 });
 
 global.scenario = (name, tests, clientName, close = false) =>

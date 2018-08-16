@@ -56,6 +56,11 @@ class CommonClient {
     await this.waitFor(Authentication.page_content);
   }
 
+  async accessToFO(selector, id) {
+    await this.waitForAndClick(selector, 4000);
+    await this.switchWindow(id);
+  }
+
   async openShopURL() {
     await page.goto(global.URL);
     await page._client.send('Emulation.clearDeviceMetricsOverride');
@@ -88,7 +93,7 @@ class CommonClient {
   }
 
   async screenshot(fileName = 'screenshot') {
-    await page.waitForNavigation({waitUntil: 'domcontentloaded'});
+    await page.waitForNavigation({waitUntil: 'networkidle0'});
     await page.screenshot({path: 'test/mocha/screenshots/' + fileName + global.dateTime + '.png'});
   }
 
@@ -157,11 +162,6 @@ class CommonClient {
     }
   }
 
-  async accessToFO(selector, id) {
-    await this.waitForAndClick(selector, 4000);
-    await this.switchWindow(id);
-  }
-
   async switchShopLanguageInFo(language = 'fr') {
     await this.waitForAndClick(HomePage.language_selector);
     await this.waitFor(1000);
@@ -176,6 +176,7 @@ class CommonClient {
     let currentUrl = await page.target().url();
     expect(currentUrl).to.contain(textToCheckWith);
   }
+
   async clearInputAndSetValue(selector, text) {
     await page.click(selector);
     await page.keyboard.down('Control');
