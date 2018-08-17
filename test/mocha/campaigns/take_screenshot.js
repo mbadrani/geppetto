@@ -1,12 +1,9 @@
-scenario('Test mocha with puppeteer', client => {
-  test('should open the browser', async () => {
-    await client.open();
-    await client.startTracing('take_screenshot');
-  });
-  test('should go to the Back office', () => client.accessToBO());
-  test('should login successfully in the Back office', () => client.signInBO());
-  test('should take a screenshot', async () => {
-    await client.screenshot();
-    await client.stopTracing();
-  });
+const authentication = require('./common_scenarios/authentication');
+
+scenario('Test mocha with puppeteer', () => {
+  authentication.signInBO('take_screenshot');
+  scenario('Take a screenshot', client => {
+    test('should take successfuly a screenshot', () => client.screenshot());
+  }, 'common_client');
+  authentication.signOutBO();
 }, 'common_client', true);
