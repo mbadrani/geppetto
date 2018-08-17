@@ -7,7 +7,8 @@
     "test": "test"
   },
   "scripts": {
-    "mocha-test-puppeteer": "node_modules/mocha/bin/mocha test/mocha/campaigns/take_screenshot.js"
+    "mocha-test-puppeteer": "node_modules/mocha/bin/mocha test/mocha/campaigns/take_screenshot.js",
+    "specific-test": "node_modules/mocha/bin/mocha test/mocha/campaigns/$TEST_PATH"
   },
   "repository": {
     "type": "git",
