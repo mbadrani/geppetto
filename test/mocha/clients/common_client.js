@@ -126,7 +126,7 @@ class CommonClient {
   }
 
   async searchByValue(nameSelector, buttonSelector, value) {
-    await page.waitFor(nameSelector);
+    await this.waitFor(nameSelector);
     await this.waitForAndType(nameSelector, value, 2000);
     await this.waitForAndClick(buttonSelector);
   }
@@ -217,6 +217,20 @@ class CommonClient {
     await page.waitFor(wait);
     await page.waitFor(selector);
     await page.select(selector, value);
+  }
+
+  async confirmationDialog(action = 'accept') {
+    switch (action) {
+      case "accept":
+        await page.on("dialog", (dialog) => {
+          dialog.accept();
+        });
+        break;
+      default :
+        await page.on("dialog", (dialog) => {
+          dialog.dismiss();
+        });
+    }
   }
 }
 
