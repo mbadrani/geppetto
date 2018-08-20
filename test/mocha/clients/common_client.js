@@ -56,6 +56,11 @@ class CommonClient {
     await this.waitFor(Authentication.page_content);
   }
 
+  async accessToFO(selector, id) {
+    await this.waitForAndClick(selector, 4000);
+    await this.switchWindow(id);
+  }
+
   async openShopURL() {
     await page.goto(global.URL);
     await page._client.send('Emulation.clearDeviceMetricsOverride');
@@ -110,8 +115,20 @@ class CommonClient {
     await page.type(selector, value);
   }
 
+  async waitForAndSetValue(selector, value, wait = 0, options = {}) {
+    await this.waitFor(wait);
+    await this.waitFor(selector, options);
+    await page.$eval(selector, (el, value) => el.value = value, value);
+  }
+
   async waitFor(timeoutOrSelectorOrFunction, options = {}) {
     await page.waitFor(timeoutOrSelectorOrFunction, options);
+  }
+
+  async searchByValue(nameSelector, buttonSelector, value) {
+    await page.waitFor(nameSelector);
+    await this.waitForAndType(nameSelector, value, 2000);
+    await this.waitForAndClick(buttonSelector);
   }
 
   async setDownloadBehavior() {
@@ -157,11 +174,6 @@ class CommonClient {
     }
   }
 
-  async accessToFO(selector, id) {
-    await this.waitForAndClick(selector, 4000);
-    await this.switchWindow(id);
-  }
-
   async switchShopLanguageInFo(language = 'fr') {
     await this.waitForAndClick(HomePage.language_selector);
     await this.waitFor(1000);
@@ -176,6 +188,7 @@ class CommonClient {
     let currentUrl = await page.target().url();
     expect(currentUrl).to.contain(textToCheckWith);
   }
+
   async clearInputAndSetValue(selector, text) {
     await page.click(selector);
     await page.keyboard.down('Control');
@@ -198,6 +211,12 @@ class CommonClient {
   async isEnable(selector) {
     const isEnabled = await page.$(selector + '[disabled]') === null;
     expect(isEnabled).to.be.true;
+  }
+
+  async waitForAndSelect(selector, value, wait = 0) {
+    await page.waitFor(wait);
+    await page.waitFor(selector);
+    await page.select(selector, value);
   }
 }
 
