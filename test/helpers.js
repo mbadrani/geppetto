@@ -7,7 +7,7 @@ const takeScreenshot = async err => await this.client.screenshot('error').then((
 });
 
 global.test = (name, instructions) => it(name, () => {
-  return instructions().catch(takeScreenshot);
+  return instructions().catch();
 });
 
 global.scenario = (name, tests, clientName, close = false) =>
@@ -17,6 +17,9 @@ global.scenario = (name, tests, clientName, close = false) =>
     before(() => this.client = client);
     tests(client);
     if (close) {
-      after(() => this.client.close());
+      after(async () => {
+        await this.client.stopTracing();
+        await this.client.close();
+      });
     }
   });
