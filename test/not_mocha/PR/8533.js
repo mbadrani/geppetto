@@ -107,7 +107,7 @@ const deleteProduct = async () => {
 };
 
 /** This scenario is based on the bug described in this PR
- * https://github.com/PrestaShop/PrestaShop/pull/9335
+ * https://github.com/PrestaShop/PrestaShop/pull/8533
  */
 open()
   .then(() => console.log('should open the browser'))
