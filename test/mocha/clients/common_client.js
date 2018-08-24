@@ -5,6 +5,7 @@ const {Authentication} = require('../selectors/BO/authenticationPage');
 const {AuthenticationFO} = require('../selectors/FO/authentication');
 const {HomePage} = require('../selectors/FO/homePage');
 const {Dashboard} = require('../selectors/BO/dashboardPage');
+const {Menu} = require('../selectors/BO/menu');
 let fs = require('fs');
 let options = {
   timeout: 30000,
@@ -15,6 +16,7 @@ let options = {
   },
   args: [`--window-size=${1280},${1024}`]
 };
+global.tab = [];
 
 class CommonClient {
 
@@ -54,6 +56,11 @@ class CommonClient {
     await page.goto(global.URL + '/admin-dev');
     await page._client.send('Emulation.clearDeviceMetricsOverride');
     await this.waitFor(Authentication.page_content);
+  }
+
+  async accessToFO(selector, id, wait = 4000) {
+    await this.waitForAndClick(selector, wait);
+    await this.switchWindow(id);
   }
 
   async openShopURL() {
@@ -96,12 +103,6 @@ class CommonClient {
     await this.waitFor(wait);
     await this.waitFor(selector, options);
     await page.click(selector, options);
-  }
-
-  async waitForAndClickWithEvaluate(selector, wait = 0, options = {}) {
-    await this.waitFor(wait);
-    await this.waitFor(selector, options);
-    await page.evaluate(selector => document.querySelector(selector).click(), selector);
   }
 
   async waitForAndType(selector, value, wait = 0, options = {}) {
@@ -167,11 +168,6 @@ class CommonClient {
         await page.$eval(selector, el => el.innerText).then((text) => expect(text).to.contain(textToCheckWith));
         break;
     }
-  }
-
-  async accessToFO(selector, id, wait = 4000) {
-    await this.waitForAndClick(selector, wait);
-    await this.switchWindow(id);
   }
 
   async switchShopLanguageInFo(language = 'fr') {
@@ -251,6 +247,28 @@ class CommonClient {
     const exists = await page.$(selector) === null;
     expect(exists).to.be.true;
   }
+
+  async isVisible(selector, wait = 0) {
+    await this.waitFor(wait);
+    global.visible = await page.$(selector) !== null;
+  }
+
+  async getBaseUrl(globalVariable) {
+    global.tab[globalVariable] = await page.url();
+  }
+
+  async switchShop(isSelected = 'All shop') {
+    await this.waitForAndClick(Menu.dashboard_menu);
+    await this.waitForAndClick(CommonBO.shopname_button, 1000);
+    await page.waitFor(1000);
+    let index = 1;
+    if (isSelected !== 'All shop') {
+      index = await isSelected === 'First shop' ? 3 : 4;
+    }
+    await page.waitFor(2000);
+    await this.waitForAndClick(CommonBO.shopname_option.replace('%ID', index));
+    await page.waitFor(3000);
+  };
 }
 
 module.exports = CommonClient;
