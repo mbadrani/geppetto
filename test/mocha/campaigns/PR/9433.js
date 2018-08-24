@@ -5,8 +5,11 @@ let productData = {
   name: 'P1',
   reference: 'P9433',
   quantity: '30',
-  discount: '4',
-  customization: 'customizationValue'
+  type: 'standard',
+  priceHT: '10',
+  options: {
+    customization: 'customizationValue'
+  }
 };
 
 /** This scenario is based on the bug described in this PR

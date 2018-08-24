@@ -56,11 +56,6 @@ class CommonClient {
     await this.waitFor(Authentication.page_content);
   }
 
-  async accessToFO(selector, id) {
-    await this.waitForAndClick(selector, 4000);
-    await this.switchWindow(id);
-  }
-
   async openShopURL() {
     await page.goto(global.URL);
     await page._client.send('Emulation.clearDeviceMetricsOverride');
@@ -174,6 +169,11 @@ class CommonClient {
     }
   }
 
+  async accessToFO(selector, id, wait = 4000) {
+    await this.waitForAndClick(selector, wait);
+    await this.switchWindow(id);
+  }
+
   async switchShopLanguageInFo(language = 'fr') {
     await this.waitForAndClick(HomePage.language_selector);
     await this.waitFor(1000);
@@ -231,6 +231,15 @@ class CommonClient {
           dialog.dismiss();
         });
     }
+  }
+
+  async checkBrowserMessage(textToCheckWith) {
+    await page.on('error', error => {
+      console.log(error)
+      for (let i = 0; i < msg.args().length; i++) {
+        expect(msg.args()[i].to.contain(textToCheckWith))
+      }
+    });
   }
 }
 
