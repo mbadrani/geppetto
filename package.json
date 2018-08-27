@@ -8,6 +8,7 @@
   },
   "scripts": {
     "mocha-test-puppeteer": "node_modules/mocha/bin/mocha test/mocha/campaigns/take_screenshot.js",
+    "PR": "node_modules/mocha/bin/mocha test/mocha/campaigns/PR",
     "specific-test": "node_modules/mocha/bin/mocha test/mocha/campaigns/$TEST_PATH"
   },
   "repository": {
@@ -21,7 +22,7 @@
   },
   "homepage": "https://github.com/mbadrani/geppetto#readme",
   "dependencies": {
-    "puppeteer": "^1.6.0"
+    "puppeteer": "^1.7.0"
   },
   "devDependencies": {
     "chai": "^4.1.2",
