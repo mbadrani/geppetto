@@ -235,7 +235,7 @@ class CommonClient {
 
   async checkBrowserMessage(textToCheckWith) {
     await page.on('error', error => {
-      console.log(error)
+      console.log(error);
       for (let i = 0; i < msg.args().length; i++) {
         expect(msg.args()[i].to.contain(textToCheckWith))
       }
@@ -244,6 +244,11 @@ class CommonClient {
 
   async isExisting(selector) {
     const exists = await page.$(selector) !== null;
+    expect(exists).to.be.true;
+  }
+
+  async isNotExisting(selector) {
+    const exists = await page.$(selector) === null;
     expect(exists).to.be.true;
   }
 }

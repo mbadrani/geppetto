@@ -6,6 +6,8 @@ module.exports = {
     quantity_input: '#main  input.js-cart-line-product-quantity',
     cart_products_count: '#_desktop_cart  span.cart-products-count',
     product_name: '#main div.product-line-info > a',
-    block_cart: '#blockcart-modal div.modal-content'
+    block_cart: '#blockcart-modal div.modal-content',
+    product_details_button: '#main li:nth-child(2) > a.nav-link',
+    specific_references: '#product-details > section.product-features > p'
   }
 };
