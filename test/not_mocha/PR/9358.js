@@ -5,7 +5,7 @@ const checkSearchPage = async () => {
 	const browser = await puppeteer.launch({ headless: false, args: [`--window-size=${1280},${1024}`] });
 	const page = await browser.newPage();
 	await page.tracing.start({
-		path: '9358.json',
+		path: 'trace/9358.json',
 		categories: ['devtools.timeline']
 	});
 

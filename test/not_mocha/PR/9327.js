@@ -6,7 +6,7 @@ const checkProductPage = async () => {
 	const page = await browser.newPage();
 
 	await page.tracing.start({
-		path: '9327.json',
+		path: 'trace/9327.json',
 		categories: ['devtools.timeline']
 	});
 	await page.goto(global.URL + '/admin-dev');
