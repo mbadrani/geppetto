@@ -161,6 +161,30 @@ class CommonClient {
     await this.waitForAndClick(selector, 4000);
     await this.switchWindow(id);
   }
+
+  async clearInputAndSetValue(selector, text) {
+    await page.click(selector);
+    await page.keyboard.down('Control');
+    await page.keyboard.down('A');
+    await page.keyboard.up('A');
+    await page.keyboard.up('Control');
+    await page.keyboard.press('Backspace');
+    await page.type(selector, text);
+  }
+
+  async eval(selector, data, wait = 0) {
+    await this.waitFor(wait);
+    await page.$eval(selector, (el, value) => el.value = value, data);
+  }
+
+  async keyboardPress(key) {
+    await page.keyboard.press(key);
+  }
+
+  async isEnable(selector) {
+    const isEnabled = await page.$(selector + '[disabled]') === null;
+    expect(isEnabled).to.be.true;
+  }
 }
 
 module.exports = CommonClient;
