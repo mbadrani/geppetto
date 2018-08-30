@@ -50,7 +50,7 @@ const installShop = async (debugMode = false) => {
   console.log('Step 3 : System compatibility');
   // Checking prestashop compatibility
   await page.waitFor(2000);
-  await page.$eval('#sheet_ > h3', el => el.innerText).then((text) => {
+  await page.$eval('#sheet_system > h3', el => el.innerText).then((text) => {
     expect(text).to.be.equal('PrestaShop compatibility with your system environment has been verified!');
   });
   await page.click('#btNext');

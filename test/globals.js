@@ -15,5 +15,6 @@ global.dbServer = argv.DB_SERVER;
 global.dbUser = argv.DB_USER;
 global.dbPassword = argv.DB_PASSWD;
 
+global.downloadFileFolder = './test/mocha/downloads/';
 global.customerEmail = 'pub@prestashop.com';
 global.customerPassword = '123456789';
