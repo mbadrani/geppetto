@@ -162,6 +162,20 @@ class CommonClient {
     await this.switchWindow(id);
   }
 
+  async switchShopLanguageInFo(language = 'fr') {
+    await this.waitForAndClick(HomePage.language_selector);
+    await this.waitFor(1000);
+    if (language === 'en') {
+      await this.waitForAndClick(HomePage.language_EN);
+    } else {
+      await this.waitForAndClick(HomePage.language_FR);
+    }
+  }
+
+  async checkURL(textToCheckWith) {
+    let currentUrl = await page.target().url();
+    expect(currentUrl).to.contain(textToCheckWith);
+  }
   async clearInputAndSetValue(selector, text) {
     await page.click(selector);
     await page.keyboard.down('Control');
