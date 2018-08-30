@@ -115,8 +115,20 @@ class CommonClient {
     await page.type(selector, value);
   }
 
+  async waitForAndSetValue(selector, value, wait = 0, options = {}) {
+    await this.waitFor(wait);
+    await this.waitFor(selector, options);
+    await page.$eval(selector, (el, value) => el.value = value, value);
+  }
+
   async waitFor(timeoutOrSelectorOrFunction, options = {}) {
     await page.waitFor(timeoutOrSelectorOrFunction, options);
+  }
+
+  async searchByValue(nameSelector, buttonSelector, value) {
+    await page.waitFor(nameSelector);
+    await this.waitForAndType(nameSelector, value, 2000);
+    await this.waitForAndClick(buttonSelector);
   }
 
   async setDownloadBehavior() {
@@ -199,6 +211,12 @@ class CommonClient {
   async isEnable(selector) {
     const isEnabled = await page.$(selector + '[disabled]') === null;
     expect(isEnabled).to.be.true;
+  }
+
+  async waitForAndSelect(selector, value, wait = 0) {
+    await page.waitFor(wait);
+    await page.waitFor(selector);
+    await page.select(selector, value);
   }
 }
 
