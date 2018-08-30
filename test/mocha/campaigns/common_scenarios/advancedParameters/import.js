@@ -19,7 +19,7 @@ module.exports = {
   },
   async checkModalConfirmation(fileName) {
     scenario('Check the appearance of confirmation dialog', async client => {
-      test('should upload the downloaded file "' + fileName + '"', () => client.uploadFile(ImportPage.import_file_input, fileName));
+      test('should upload the downloaded file "' + fileName + '"', () => client.uploadFile(ImportPage.import_file_input, downloadFileFolder, fileName));
       test('should click on "Yes" to delete all categories before import', () => client.waitForAndClick(ImportPage.delete_all_categories_before_import_button, 2000));
       test('should check the appearance of confirmation dialog when we click on "Next step" button', () => client.checkDialog(ImportPage.next_step_button, 2000));
     }, 'advancedParameters/importClient');
