@@ -63,8 +63,8 @@ class CommonClient {
     await this.switchWindow(id);
   }
 
-  async openShopURL() {
-    await page.goto(global.URL);
+  async openShopURL(param = '') {
+    await page.goto(global.URL + param);
     await page._client.send('Emulation.clearDeviceMetricsOverride');
     await this.waitFor(HomePage.page_content);
   }
@@ -167,6 +167,13 @@ class CommonClient {
         await page.$eval(selector, el => el.innerText).then((text) => expect(text).to.contain(textToCheckWith));
         break;
     }
+  }
+
+  async checkAttributeValue(selector, attribute, textToCheckWith, wait = 0) {
+    await page.waitFor(wait);
+    await page.$eval(selector, (el, attribute) => el.getAttribute(attribute), attribute).then((className) => {
+      expect(className).to.be.equal(textToCheckWith);
+    });
   }
 
   async switchShopLanguageInFo(language = 'fr') {
