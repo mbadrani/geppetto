@@ -1,14 +1,18 @@
 module.exports = {
   AddProduct: {
     quantity_combination_tab:'#tab_step3 > a',
+    options_tab: '#tab_step6 > a',
     success_message: '#growls-default div.growl-message',
     save_button: 'button.js-btn-save[type=submit]',
     online_switcher: '.switch-input',
     symfony_toolbar: 'a[title="Close Toolbar"]',
+    close_validation_button: '.growl-close',
+    validation_msg: '#growls-default > .growl-notice > .growl-message:not(:empty)',
 
     Basic_settings: {
       name_input: '#form_step1_name_1',
       combination_radio_button: '#show_variations_selector > div:nth-child(3) > label > input[type="radio"]',
+      simple_product_radio_button: '#show_variations_selector > div:nth-child(2) > label input',
       reference_input: '#form_step6_reference',
       quantity_input: '#form_step1_qty_0_shortcut',
       price_input: '#form_step1_price_shortcut',
@@ -19,11 +23,17 @@ module.exports = {
       first_attribute_select: '#attributes-generator div.tt-dataset  div:nth-child(1)',
       generate_combination_button: '#create-combinations',
       attribute_quantity_input: '#accordion_combinations > tr:nth-child(%NUMBER) > td.attribute-quantity  input',
-
+      combination_size_s: '#attribute-group-1  div:nth-child(1) > label',
+      combination_size_m: '#attribute-group-1  div:nth-child(2) > label'
     },
 
     Quantity: {
       default_behaviour_radio_button: '#form_step3_out_of_stock_2',
+    },
+
+    Options: {
+      add_customization_button: '#custom_fields > a',
+      customization_input: '#form_step6_custom_fields_0_label_1',
     }
   }
 };
