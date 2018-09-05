@@ -1,9 +1,9 @@
 module.exports = {
-  async signInBO(testName) {
+  async signInBO(traceName) {
     scenario('Login in the Back Office', client => {
       test('should open the browser', async () => {
         await client.open();
-        await client.startTracing(testName);
+        await client.startTracing(traceName);
       });
       test('should go to the Back office', () => client.accessToBO());
       test('should login successfully in the Back Office', () => client.signInBO());
@@ -16,11 +16,11 @@ module.exports = {
     }, 'common_client');
   },
 
-  async openShop(testName) {
+  async openShop(traceName) {
     scenario('Open the shop', client => {
       test('should open the browser', async () => {
         await client.open();
-        await client.startTracing(testName);
+        await client.startTracing(traceName);
       });
       test('should open the shop', () => client.openShopURL());
     }, 'common_client')
