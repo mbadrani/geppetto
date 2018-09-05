@@ -7,6 +7,10 @@ let productData = {
   quantity: '30',
   type: 'standard',
   priceHT: '10',
+  pictures: [
+    '1.png',
+    '2.jpg'
+  ],
   options: {
     customization: 'customizationValue'
   }

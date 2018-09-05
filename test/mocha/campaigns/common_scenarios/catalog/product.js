@@ -9,17 +9,21 @@ module.exports = {
   /**
    * @param productData
    * let productData = {
-   * name: 'product name' (required),
-   * reference: 'product reference' (required),
-   * quantity: 'product quantity' (required),
-   * type: 'product type (standard, pack, virtual, combination)' (required),
-   * priceHT: 'product price HT' (required),
-   * options: {
-   *  customization: 'customizationValue' (optional)
-   * },
-   * quantities: {
+   *  name: 'product name' (required),
+   *  reference: 'product reference' (required),
+   *  quantity: 'product quantity' (required),
+   *  type: 'product type (standard, pack, virtual, combination)' (required),
+   *  priceHT: 'product price HT' (required),
+   *  pictures: [
+   *   'first product picture', (required)
+   *   'second product picture' (required)
+   *  ]
+   *  options: {
+   *   customization: 'customizationValue' (optional)
+   *  },
+   *  quantities: {
    *   availability: 'Availability preferences (default, allow orders, deny orders)' (optional)
-   * }
+   *  }
    *
    * };
    */
@@ -29,16 +33,18 @@ module.exports = {
         await client.waitForAndClick(Menu.Sell.Catalog.catalog_menu);
         await client.waitForAndClick(Menu.Sell.Catalog.products_submenu, 1000);
       });
-      test('should click on "New product"', () => client.waitForAndClick(Catalog.add_new_button));
+      test('should click on "New product" button', () => client.waitForAndClick(Catalog.add_new_button, 2000));
       test('should set the "Name" input', () => client.waitForAndType(AddProduct.Basic_settings.name_input, productData.name + global.dateTime));
       test('should set the "Reference" input', () => client.waitForAndType(AddProduct.Basic_settings.reference_input, productData.reference));
-      test('should set the "Quantity" input', () => client.clearInputAndSetValue(AddProduct.Basic_settings.quantity_input, productData.quantity));
+      test('should set the "Quantity" input', () => client.waitForAndType(AddProduct.Basic_settings.quantity_input, productData.quantity, 2000));
       test('should set the "Price" input', () => client.clearInputAndSetValue(AddProduct.Basic_settings.price_input, productData.priceHT));
+      for (let i = 0; i < productData.pictures.length; i++) {
+        test('should upload the ' + client.stringifyNumber(i+1) + ' product picture', () => client.uploadFile(AddProduct.Basic_settings.files_input, dataFileFolder, productData.pictures[i]));
+      }
       test('should close the symfony toolbar', async () => {
-        await page.waitFor(2000);
-        const exist = await page.$(AddProduct.symfony_toolbar, {visible: true});
-        if (exist !== null) {
-          await page.click(AddProduct.symfony_toolbar);
+        await client.isVisible(CommonBO.symfony_toolbar_close_button, 2000);
+        if (global.visible) {
+          await client.waitForAndClick(CommonBO.symfony_toolbar_close_button);
         }
       });
       test('should click on "Online"', () => client.waitForAndClick(AddProduct.online_switcher));
@@ -48,40 +54,47 @@ module.exports = {
       }
 
       if (productData.type === 'combination') {
-        scenario('Add Attribute', client => {
+        scenario('Edit the combinations form', client => {
           test('should select the "Product with combination" radio button', () => client.waitForAndClick(AddProduct.Basic_settings.combination_radio_button));
           test('should go to "Combinations" tab', () => client.waitForAndClick(AddProduct.quantity_combination_tab));
           test('should choose the combinations', async () => {
-            await client.waitForAndClick(AddProduct.Combination.combination_size_s, 1000);
-            await client.waitForAndClick(AddProduct.Combination.combination_size_m, 1000);
+            await client.waitForAndClick(AddProduct.Combination.attribute_size_checkbox_button.replace('%ID', 1), 1000); // combination size s
+            await client.waitForAndClick(AddProduct.Combination.attribute_size_checkbox_button.replace('%ID', 2), 1000); // combination size m
           });
           test('should click on "Generate" button', () => client.waitForAndClick(AddProduct.Combination.generate_combination_button, 3000));
           test('should verify the appearance of the green validation', async () => {
             await client.checkTextValue(AddProduct.validation_msg, 'Settings updated.');
             await client.waitForAndClick(AddProduct.close_validation_button);
           });
+          test('should check the appearance of combinations', () => client.waitFor(AddProduct.Combination.combination_tr.replace('%POS', 1), {visible: true, timeout: 10000}));
         }, 'common_client');
       }
 
       if (productData.hasOwnProperty('options')) {
-        test('should click on "Options" tab', () => client.waitForAndClick(AddProduct.options_tab, 2000));
-        if (productData.options.hasOwnProperty('customization')) {
-          test('should add the "Customization field" of catalog', async () => {
-            await client.waitForAndClick(AddProduct.Options.add_customization_button, 2000);
-            await client.waitForAndType(AddProduct.Options.customization_input, productData.options.customization, 2000);
-          });
-        }
+        scenario('Edit the options form', client => {
+          test('should click on "Options" tab', () => client.waitForAndClick(AddProduct.options_tab, 2000));
+          if (productData.options.hasOwnProperty('customization')) {
+            test('should add the "Customization field" of catalog', async () => {
+              await client.waitForAndClick(AddProduct.Options.add_customization_button, 2000);
+              await client.waitForAndType(AddProduct.Options.customization_input, productData.options.customization, 2000);
+            });
+          }
+        }, 'catalog/product');
       }
 
       if (productData.hasOwnProperty('quantities')) {
-        test('should click on "Quantity" tab"', () => client.waitForAndClick(AddProduct.quantity_combination_tab));
-        if (productData.quantities.hasOwnProperty('availability') && productData.quantities.availability === 'default') {
-          test('should check "Default behaviour" radio button', () => client.waitForAndClick(AddProduct.Quantity.default_behaviour_radio_button));
-        }
+        scenario('Edit the quantity form', client => {
+          test('should click on "Quantity" tab"', () => client.waitForAndClick(AddProduct.quantity_combination_tab));
+          if (productData.quantities.hasOwnProperty('availability') && productData.quantities.availability === 'default') {
+            test('should check "Default behaviour" radio button', () => client.waitForAndClick(AddProduct.Quantity.default_behaviour_radio_button));
+          }
+        }, 'catalog/product');
       }
 
-      test('should click on "Save" button', () => client.waitForAndClick(AddProduct.save_button));
-      test('should check and close the green validation', () => client.waitForAndClick(AddProduct.close_validation_button));
+      scenario('Save the product then close the green validation', client => {
+        test('should click on "Save" button', () => client.waitForAndClick(AddProduct.save_button));
+        test('should check and close the green validation', () => client.waitForAndClick(AddProduct.close_validation_button));
+      }, 'catalog/product');
     }, 'common_client');
   },
   async searchProductInFo(productData) {

@@ -95,7 +95,6 @@ class CommonClient {
   }
 
   async screenshot(fileName = 'screenshot') {
-    await page.waitForNavigation({waitUntil: 'networkidle0'});
     await page.screenshot({path: 'test/mocha/screenshots/' + fileName + global.dateTime + '.png'});
   }
 
@@ -150,9 +149,9 @@ class CommonClient {
     }, selector);
   }
 
-  async uploadFile(selector, fileName) {
-    const importFileInput = await page.$(selector);
-    await importFileInput.uploadFile(global.downloadFileFolder + fileName);
+  async uploadFile(selector, fileFolder, fileName) {
+    const inputFile = await page.$(selector);
+    await inputFile.uploadFile(fileFolder + fileName);
   }
 
   async checkTextValue(selector, textToCheckWith, parameter = 'equal', wait = 0) {
@@ -268,7 +267,15 @@ class CommonClient {
     await page.waitFor(2000);
     await this.waitForAndClick(CommonBO.shopname_option.replace('%ID', index));
     await page.waitFor(3000);
-  };
+  }
+
+  stringifyNumber(number) {
+    let special = ['zeroth','first', 'second', 'third', 'fourth', 'fifth', 'sixth', 'seventh', 'eighth', 'ninth', 'tenth', 'eleventh', 'twelfth', 'thirteenth', 'fourteenth', 'fifteenth', 'sixteenth', 'seventeenth', 'eighteenth', 'nineteenth'];
+    let deca = ['twent', 'thirt', 'fort', 'fift', 'sixt', 'sevent', 'eight', 'ninet'];
+    if (number < 20) return special[number];
+    if (number%10 === 0) return deca[Math.floor(number/10)-2] + 'ieth';
+    return deca[Math.floor(number/10)-2] + 'y-' + special[number%10];
+  }
 }
 
 module.exports = CommonClient;
