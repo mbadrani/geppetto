@@ -10,9 +10,18 @@ module.exports = {
     dropdown_toggle_button: '#table-shop button.dropdown-toggle',
     delete_action_button: '#table-shop a.delete',
     filter_reset_button: '#table-shop button[name="submitResetshop"]',
+    edit_button: '#table-shop_group a.edit',
     MultistoreEditPage: {
       virtual_uri_input: '#virtual_uri',
       save_button: '#shop_url_form_submit_btn_1'
+    },
+    MultistoreTree: {
+      shop_name: '#shops-tree li:nth-child(%D) > label > a',
+      default_group: '#shops-tree span.tree-folder-name a'
+    },
+    ShopGroup: {
+      share_available_quantities: '#fieldset_0 label[for="share_stock_%D"]',
+      save_button: '#shop_group_form_submit_btn'
     }
   }
 };
