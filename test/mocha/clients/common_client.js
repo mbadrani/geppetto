@@ -88,7 +88,6 @@ class CommonClient {
   }
 
   async screenshot(fileName = 'screenshot') {
-    await page.waitForNavigation({waitUntil: 'networkidle0'});
     await page.screenshot({path: 'test/mocha/screenshots/' + fileName + global.dateTime + '.png'});
   }
 
@@ -242,12 +241,14 @@ class CommonClient {
     });
   }
 
-  async isExisting(selector) {
+  async isExisting(selector, wait = 0) {
+    await page.waitFor(wait);
     const exists = await page.$(selector) !== null;
     expect(exists).to.be.true;
   }
 
-  async isNotExisting(selector) {
+  async isNotExisting(selector, wait = 0) {
+    await page.waitFor(wait);
     const exists = await page.$(selector) === null;
     expect(exists).to.be.true;
   }
