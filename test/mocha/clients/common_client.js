@@ -244,12 +244,14 @@ class CommonClient {
     });
   }
 
-  async isExisting(selector) {
+  async isExisting(selector, wait = 0) {
+    await page.waitFor(wait);
     const exists = await page.$(selector) !== null;
     expect(exists).to.be.true;
   }
 
-  async isNotExisting(selector) {
+  async isNotExisting(selector, wait = 0) {
+    await page.waitFor(wait);
     const exists = await page.$(selector) === null;
     expect(exists).to.be.true;
   }
