@@ -11,6 +11,7 @@ module.exports = {
     order_history_and_details_button: '#history-link',
     sign_out_button: '#_desktop_user_info  a.logout',
     logo_home_page: '#_desktop_logo  img',
-    product_name: 'div.products > article:nth-child(%ID) .h3.product-title > a'
+    product_name: 'div.products > article:nth-child(%ID) .h3.product-title > a',
+    all_product_link: '#content a.all-product-link'
   }
 };

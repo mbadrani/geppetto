@@ -319,6 +319,26 @@ class CommonClient {
       expect(title).to.equal(textToCheckWith);
     });
   }
+
+  async dragAndDrop(sourceSelector, destinationSelector) {
+    let firstElement = await page.$(sourceSelector);
+    let secondElement = await page.$(destinationSelector);
+    let first_bounding_box = await firstElement.boundingBox();
+    let second_bounding_box = await secondElement.boundingBox();
+    let mouse = page.mouse;
+    await mouse.move(first_bounding_box.x + (first_bounding_box.width / 2), first_bounding_box.y + (first_bounding_box.height / 2));
+    await mouse.down();
+    await mouse.move(second_bounding_box.x + (second_bounding_box.width / 2), second_bounding_box.y + (second_bounding_box.height / 2));
+    await mouse.up();
+  }
+
+  async getTextInVar(selector, globalVar, wait = 0) {
+    await this.waitFor(wait);
+    await this.waitFor(selector);
+    await page.$eval(selector, el => el.innerText).then((text) => {
+      global.tab[globalVar] = text;
+    });
+  }
 }
 
 module.exports = CommonClient;
