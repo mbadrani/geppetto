@@ -29,7 +29,7 @@ module.exports = {
    */
   async createProduct(productData) {
     scenario('Create a new product in the Back Office', client => {
-      test('should go to "Catalog" page', async () => {
+      test('should go to "Catalog" page', async() => {
         await client.waitForAndClick(Menu.Sell.Catalog.catalog_menu);
         await client.waitForAndClick(Menu.Sell.Catalog.products_submenu, 1000);
       });
@@ -42,6 +42,7 @@ module.exports = {
         test('should upload the ' + client.stringifyNumber(i+1) + ' product picture', () => client.uploadFile(AddProduct.Basic_settings.files_input, dataFileFolder, productData.pictures[i]));
       }
       test('should close the symfony toolbar', async () => {
+        await page.waitFor(2000);
         await client.isVisible(CommonBO.symfony_toolbar_close_button, 2000);
         if (global.visible) {
           await client.waitForAndClick(CommonBO.symfony_toolbar_close_button);
@@ -62,11 +63,19 @@ module.exports = {
             await client.waitForAndClick(AddProduct.Combination.attribute_size_checkbox_button.replace('%ID', 2), 1000); // combination size m
           });
           test('should click on "Generate" button', () => client.waitForAndClick(AddProduct.Combination.generate_combination_button, 3000));
-          test('should verify the appearance of the green validation', async () => {
+          test('should verify the appearance of the green validation', async() => {
             await client.checkTextValue(AddProduct.validation_msg, 'Settings updated.');
             await client.waitForAndClick(AddProduct.close_validation_button);
           });
           test('should check the appearance of combinations', () => client.waitFor(AddProduct.Combination.combination_tr.replace('%POS', 1), {visible: true, timeout: 10000}));
+          if (productData.hasOwnProperty('combinationsQuantities')) {
+            scenario('Add quantities to combinations', client => {
+              test('should add quantities to combinations', async() => {
+                await client.clearInputAndSetValue(AddProduct.Combination.attribute_quantity_input.replace("%NUMBER", 1), productData.combinationsQuantities.firstQuantity, 4000);
+                await client.clearInputAndSetValue(AddProduct.Combination.attribute_quantity_input.replace("%NUMBER", 2), productData.combinationsQuantities.secondQuantity, 2000);
+              });
+            }, 'common_client');
+          }
         }, 'common_client');
       }
 
@@ -93,15 +102,18 @@ module.exports = {
 
       scenario('Save the product then close the green validation', client => {
         test('should click on "Save" button', () => client.waitForAndClick(AddProduct.save_button));
-        test('should check and close the green validation', () => client.waitForAndClick(AddProduct.close_validation_button));
-      }, 'catalog/product');
+        test('should check and close the green validation', async() => {
+          await client.checkTextValue(AddProduct.validation_msg, 'Settings updated.');
+          await client.waitForAndClick(AddProduct.close_validation_button);
+        });
+      }, 'common_client');
     }, 'common_client');
   },
   async searchProductInFo(productData) {
     scenario('Go to the front office and search for the created product', client => {
       test('should go to the Front Office', () => client.accessToFO(CommonBO.shopname_link, 1, 6000));
       test('should go switch language to "English"', () => client.switchShopLanguageInFo('en'));
-      test('should search for the created product', async () => {
+      test('should search for the created product', async() => {
         await client.waitForAndClick(HomePage.search_input, 2000);
         await client.waitForAndType(HomePage.search_input, productData.name + global.dateTime, 2000);
         await client.waitForAndClick(HomePage.search_button, 2000);
@@ -116,10 +128,10 @@ module.exports = {
       test('should click on "Save customization" button', () => client.waitForAndClick(ProductPageFO.save_customization_button, 2000));
       test('should check that the customization message is equal to "Your customization: ' + message + '"', () => client.checkTextValue(ProductPageFO.customization_creation, 'Your customization: ' + message, 'equal', 2000));
       test('should click on "Add to cart" button', () => client.waitForAndClick(ProductPageFO.add_to_cart_button, 2000));
-      test('should click on "Proceed to checkout" button', () => client.waitForAndClick(ProductPageFO.proceed_to_checkout_button, 2000));
+      test('should click on "Proceed to checkout" button', () => client.waitForAndClick(ProductPageFO.proceed_to_checkout_modal_button, 2000));
       test('should click on "Product customization" link', () => client.waitForAndClick(ProductPageFO.product_customization_link, 2000));
       test('should check that the customization value in the pop-up is equal to "' + productData.options.customization + '"', () => client.checkTextValue(ProductPageFO.customizationvalue, productData.options.customization, 'equal', 2000));
-      test('should check that the customization message pop-up is equal to "' + message + '"', async () => {
+      test('should check that the customization message pop-up is equal to "' + message + '"', async() => {
         await client.checkTextValue(ProductPageFO.customization_message, message, 'equal', 2000);
         await client.switchWindow(0);
       });

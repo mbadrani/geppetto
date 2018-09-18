@@ -1,5 +1,6 @@
 const {Menu} = require('../../../selectors/BO/menu');
 const {MultistorePage} = require('../../../selectors/BO/advancedParameters/multistore');
+const {Dashboard} = require('../../../selectors/BO/dashboardPage');
 
 /**
  * @param shopData
@@ -48,6 +49,29 @@ module.exports = {
         await client.waitForAndClick(MultistorePage.delete_action_button, 1000);
       });
       test('should click on "Reset" button', () => client.waitForAndClick(MultistorePage.filter_reset_button, 2000));
+    }, 'common_client');
+  },
+  async switchToAllShops(client) {
+    test('should switch to "All shops"', async () => {
+      await client.waitForAndClick(Dashboard.multistore_shop_name);
+      await client.waitForAndClick(Dashboard.click_all_shops);
+    });
+  },
+  async enableAndDisableShareAvailableQuantites(isEnable = false) {
+    scenario((isEnable ? 'Disable' : 'Enable') + ' share available quantities between group stores', client => {
+      test('should go to "Multistore" page', async () => {
+        await client.waitForAndClick(Menu.Configure.AdvancedParameters.advanced_parameters_menu, 2000);
+        await client.waitForAndClick(Menu.Configure.AdvancedParameters.multistore_submenu, 2000);
+      });
+      test('should click on "Default" group', () => client.waitForAndClick(MultistorePage.MultistoreTree.default_group));
+      test('should click on "Edit" button', () => client.waitForAndClick(MultistorePage.edit_button));
+      if (isEnable) {
+        test('should disable "Share available quantities to sell"', () => client.waitForAndClick(MultistorePage.ShopGroup.share_available_quantities.replace("%D", "off")));
+      }
+      else {
+        test('should enable "Share available quantities to sell"', () => client.waitForAndClick(MultistorePage.ShopGroup.share_available_quantities.replace("%D", "on")));
+      }
+      test('should click on "Save" button', () => client.waitForAndClick(MultistorePage.ShopGroup.save_button));
     }, 'common_client');
   }
 };

@@ -191,7 +191,8 @@ class CommonClient {
     expect(currentUrl).to.contain(textToCheckWith);
   }
 
-  async clearInputAndSetValue(selector, text) {
+  async clearInputAndSetValue(selector, text, wait = 0) {
+    await this.waitFor(wait);
     await page.click(selector);
     await page.keyboard.down('Control');
     await page.keyboard.down('A');
@@ -284,6 +285,10 @@ class CommonClient {
     if (number < 20) return special[number];
     if (number%10 === 0) return deca[Math.floor(number/10)-2] + 'ieth';
     return deca[Math.floor(number/10)-2] + 'y-' + special[number%10];
+  }
+
+  async closeWindow() {
+    await page.close();
   }
 }
 
