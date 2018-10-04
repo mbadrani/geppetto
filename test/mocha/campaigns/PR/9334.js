@@ -10,5 +10,6 @@ scenario('PR-9334: Check download simple file, available fields and confirmation
   trafficAndSeo.disableOrEnableFriendlyUrl(false);
   importScenario.downloadSimpleFileCSV('categories_import.csv');
   importScenario.checkModalConfirmation('categories_import.csv');
+  trafficAndSeo.disableOrEnableFriendlyUrl();
   authentication.signOutBO();
 }, 'common_client', true);

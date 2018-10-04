@@ -1,8 +1,8 @@
 module.exports = {
   TraficAndSeo: {
     SeoAndUrlsPage: {
-      friendly_url_button: '#conf_id_PS_REWRITING_SETTINGS label[for*="%S"]',
-      save_button: '#meta_fieldset_general button[name="submitOptionsmeta"]'
+      friendly_url_button: 'label[for*="form_set_up_urls_friendly_url_%S"]',
+      save_button: '#main-div form:nth-child(1) > div:nth-child(1) > div.card-footer button'
     }
   }
 };

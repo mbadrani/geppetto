@@ -1,12 +1,20 @@
+const {CommonBO} = require('../../../selectors/BO/commonBO');
 const {Menu} = require('../../../selectors/BO/menu');
 const {ImportPage} = require('../../../selectors/BO/configure/advancedParameters/importPage');
 
 module.exports = {
   async downloadSimpleFileCSV(fileName) {
     scenario('Check the available fields then download simple file of category', async client => {
+      test('should close the symfony toolbar', async () => {
+        await client.waitFor(CommonBO.symfony_toolbar_close_button, {visible: true});
+        const exist = await page.$(CommonBO.symfony_toolbar_close_button, {visible: true});
+        if (exist !== null) {
+          await page.click(CommonBO.symfony_toolbar_close_button);
+        }
+      });
       test('should go to "Import" page', async () => {
         await client.scrollIntoView(Menu.Configure.AdvancedParameters.advanced_parameters_menu);
-        await client.waitForAndClick(Menu.Configure.AdvancedParameters.advanced_parameters_menu, 2000);
+        await client.waitForAndClick(Menu.Configure.AdvancedParameters.advanced_parameters_menu, 5000);
         await client.waitForAndClick(Menu.Configure.AdvancedParameters.import_submenu, 2000);
       });
       test('should check the appearance of available fields', () => client.checkAvailableFields(ImportPage.available_fields_block, 'response'));
