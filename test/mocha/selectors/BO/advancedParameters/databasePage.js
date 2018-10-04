@@ -4,8 +4,8 @@ module.exports = {
     sql_query_name_input: '#form_request_sql_name',
     sql_query_textarea: '#form_request_sql_sql',
     save_button: '#main-div div.card-footer > button',
-    filter_sql_query_name_input: '#request_sql_name',
-    sql_manager_table: '#request_sql_grid_table',
+    filter_sql_query_name_input: '#SqlRequest_name',
+    sql_manager_table: '#sqlrequest_grid_table',
     get no_records_found() {
       return this.sql_manager_table + ' tbody tr:first-child p:nth-child(2)';
     },
