@@ -171,10 +171,19 @@ class CommonClient {
     }
   }
 
-  async checkAttributeValue(selector, attribute, textToCheckWith, wait = 0) {
+  async checkAttributeValue(selector, attribute, textToCheckWith, parameter = 'equal', wait = 0) {
     await page.waitFor(wait);
-    await page.$eval(selector, (el, attribute) => el.getAttribute(attribute), attribute).then((className) => {
-      expect(className).to.be.equal(textToCheckWith);
+    await page.$eval(selector, (el, attribute) => el.getAttribute(attribute), attribute).then((value) => {
+      switch (parameter) {
+        case 'contain': {
+          expect(value).to.be.contain(textToCheckWith);
+          break;
+        }
+        default: {
+          expect(value).to.be.equal(textToCheckWith);
+          break;
+        }
+      }
     });
   }
 
