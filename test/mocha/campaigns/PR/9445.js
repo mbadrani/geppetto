@@ -7,16 +7,20 @@ const product = require('../common_scenarios/catalog/product');
 
 let productData = {
   name: 'P1',
-  reference: 'P8710',
+  reference: 'P9445',
   quantity: '12',
   priceHT: '20',
   type: 'standard',
+  pictures: [
+    '1.png',
+    '2.jpg'
+  ],
   quantities: {
     availability: 'default'
   }
 };
 
-scenario('This scenario is based on the bug described on his PR: https://github.com/PrestaShop/PrestaShop/pull/9445', client => {
+scenario('This scenario is based on the bug described on his PR: https://github.com/PrestaShop/PrestaShop/pull/9445', () => {
   authentication.signInBO('9445');
 
   product.createProduct(productData);
