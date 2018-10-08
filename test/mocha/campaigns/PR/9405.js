@@ -13,11 +13,13 @@ scenario('This scenario is based on the bug described on his PR: https://github.
     test('should click on "ADD TO CART" button', () => client.waitForAndClick(ProductPageFO.add_to_cart_button));
     test('should click on "PROCEED TO CHECKOUT" button', () => client.waitForAndClick(ProductPageFO.proceed_to_checkout_modal_button, 2000, {visible: true}));
     test('should set the quantity equal to ' + quantity, async () => {
+      await client.waitFor(4000);
       await client.eval(CheckoutOrderPage.quantity_input, quantity);
       await client.waitForAndClick(CheckoutOrderPage.quantity_input);
       await client.keyboardPress('Enter');
     });
     test('should check that the quantity is equal to ' + quantity, () => client.checkTextValue(CheckoutOrderPage.cart_products_count, quantity, 'contain', 2000));
+    test('should check that the "Shopping cart" is emtpy', () => client.isExisting(CheckoutOrderPage.cart_product_no_item, 2000));
     test('should go to the "Home" page', () => client.waitForAndClick(HomePage.logo_home_page));
     test('should go to the first product page', () => client.waitForAndClick(ProductPageFO.first_product));
     test('should click on "ADD TO CART" button', () => client.waitForAndClick(ProductPageFO.add_to_cart_button));
