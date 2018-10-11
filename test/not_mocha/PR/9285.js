@@ -16,7 +16,7 @@ const accessToBo = async () => {
     categories: ['devtools.timeline']
   });
   await page.goto(global.URL + '/admin-dev');
-  await page.setViewport({width: 0, height: 0});
+  await page._client.send('Emulation.clearDeviceMetricsOverride');
   await page.waitFor('body').then(() => console.log('should check that the authentication page is well opened'));
 };
 
@@ -58,6 +58,7 @@ const duplicateAllProducts = async () => {
   await page.waitFor('#catalog-actions a[onclick*="duplicate_all"]');
   await page.click('#catalog-actions a[onclick*="duplicate_all"]').then('should click on "Duplicate selection" action from the dropdown list');
   await page.waitFor(50000);
+  await page.waitFor('#main-div div[class *= "alert-success"][role="alert"]', {visible: true, timeout: 90000});
   await page.waitFor('input[name="filter_column_name"]');
   await page.type('input[name="filter_column_name"]', 'copy').then(() => console.log('should set the "Search name" input'));
   await page.waitFor(2000);
@@ -71,6 +72,7 @@ const duplicateAllProducts = async () => {
   await page.waitFor('#catalog-actions a[onclick*="activate_all"]');
   await page.click('#catalog-actions a[onclick*="activate_all"]').then(() => console.log('should click on "Activate selection" action from the dropdown list'));
   await page.waitFor(20000);
+  await page.waitFor('#main-div div[class *= "alert-success"][role="alert"]', {visible: true, timeout: 90000});
 };
 
 const accessToFo = async () => {

@@ -16,7 +16,7 @@ const accessToBo = async () => {
     categories: ['devtools.timeline']
   });
   await page.goto(global.URL + 'admin-dev');
-  await page.setViewport({width: 0, height: 0});
+  await page._client.send('Emulation.clearDeviceMetricsOverride');
   await page.waitFor('body').then(() => console.log('should check that the authentication page is well opened'));
 };
 
@@ -100,7 +100,7 @@ const accessToFo = async () => {
     await page.bringToFront();
   }).then(() => console.log('should go to the Front Office'));
   await page.waitFor(2000);
-  await page.setViewport({width: 0, height: 0});
+  await page._client.send('Emulation.clearDeviceMetricsOverride');
   await page.reload();
   await page.waitFor('body').then(() => console.log('should check that the page is well opened'));
 };

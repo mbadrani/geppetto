@@ -16,7 +16,7 @@ const accessToBo = async () => {
     categories: ['devtools.timeline']
   });
   await page.goto(global.URL + '/admin-dev');
-  await page.setViewport({width: 0, height: 0});
+  await page._client.send('Emulation.clearDeviceMetricsOverride');
   await page.waitFor('body').then(() => console.log('should check that the authentication page is well opened'));
 };
 
@@ -33,19 +33,33 @@ const createCatalogPriceRule = async () => {
   await page.waitFor('#subtab-AdminCatalog');
   await page.click('#subtab-AdminCatalog');
   await page.waitFor(1000);
-  await page.click('#subtab-AdminParentCartRules').then(() => { console.log('should go to "Discount" page') });
+  await page.click('#subtab-AdminParentCartRules').then(() => {
+    console.log('should go to "Discount" page')
+  });
   await page.waitFor('#subtab-AdminSpecificPriceRule');
-  await page.click('#subtab-AdminSpecificPriceRule').then(() => { console.log('should click on "Catalog price rule" tab') });
+  await page.click('#subtab-AdminSpecificPriceRule').then(() => {
+    console.log('should click on "Catalog price rule" tab')
+  });
   await page.waitFor('#page-header-desc-specific_price_rule-new_specific_price_rule');
-  await page.click('#page-header-desc-specific_price_rule-new_specific_price_rule').then(() => { console.log('should click on "Add new catalog price rule" button') });
+  await page.click('#page-header-desc-specific_price_rule-new_specific_price_rule').then(() => {
+    console.log('should click on "Add new catalog price rule" button')
+  });
   await page.waitFor('#name');
-  await page.type('#name', '5% on all products').then(() => { console.log('should set the "Name" input') });
+  await page.type('#name', '5% on all products').then(() => {
+    console.log('should set the "Name" input')
+  });
   await page.waitFor('#reduction_type');
-  await page.select('#reduction_type', 'percentage').then(() => { console.log('should choose "Percentage" from the reduction type select') });
+  await page.select('#reduction_type', 'percentage').then(() => {
+    console.log('should choose "Percentage" from the reduction type select')
+  });
   await page.waitFor('#reduction');
-  await page.$eval('#reduction', (el, value) => el.value = value, '5').then(() => { console.log('should set the "Reduction" input') });
+  await page.$eval('#reduction', (el, value) => el.value = value, '5').then(() => {
+    console.log('should set the "Reduction" input')
+  });
   await page.waitFor('#specific_price_rule_form_submit_btn');
-  await page.click('#specific_price_rule_form_submit_btn').then(() => { console.log('should click on "Save" button') });
+  await page.click('#specific_price_rule_form_submit_btn').then(() => {
+    console.log('should click on "Save" button')
+  });
 };
 
 const editProduct = async (productName) => {
@@ -99,7 +113,7 @@ const deleteProduct = async () => {
   await page.waitFor('a.product-edit[onclick*="delete"]');
   await page.click('a.product-edit[onclick*="delete"]').then(() => console.log('should click on "Delete" action from dropdown list'));
   await page.waitFor(2000);
-  await page.waitForSelector('div.modal-footer > button[value="confirm"]', { visible: true });
+  await page.waitForSelector('div.modal-footer > button[value="confirm"]', {visible: true});
   await page.click('div.modal-footer > button[value="confirm"]').then(() => console.log('should click on "Delete now" button'));
   await page.waitFor(2000);
   await page.waitForSelector('button[type="reset"]');

@@ -12,8 +12,8 @@ const accessToBo = async () => {
     path: 'trace/8237.json',
     categories: ['devtools.timeline']
   });
-  await page.goto(global.URL + 'admin-dev');
-  await page.setViewport({width: 0, height: 0});
+  await page.goto(global.URL + '/admin-dev');
+  await page._client.send('Emulation.clearDeviceMetricsOverride');
   await page.waitFor('body').then(() => console.log('should check that the authentication page is well opened'));
 };
 
@@ -82,7 +82,7 @@ const switchShop = async (isSelected = 'All shop') => {
   await page.waitFor(1000);
   let index = 1;
   if (isSelected !== 'All shop') {
-    index = await isSelected === 'First shop'? 3 : 4;
+    index = await isSelected === 'First shop' ? 3 : 4;
   }
   await page.waitFor(2000);
   await page.waitFor('#header_shop li:nth-child(' + index + ') > a:nth-child(1)');
@@ -103,13 +103,13 @@ const disableOrEnableInstalledModule = async (dataTechName) => {
   await page.waitFor('#module-search-button');
   await page.click('#module-search-button').then(() => console.log('should search for the module "' + dataTechName + '" by datatechname'));
   await page.waitFor(3000);
-  await page.waitFor('div.btn-group > button.dropdown-toggle');
-  await page.click('div.btn-group > button.dropdown-toggle');
+  await page.waitFor('div[data-tech-name="' + dataTechName + '"] div[class="module-actions"] button.btn');
+  await page.click('div[data-tech-name="' + dataTechName + '"] div[class="module-actions"] button.btn');
   await page.waitFor(1000);
   await page.waitFor('button[data-confirm_modal="module-modal-confirm-' + dataTechName + '-disable"]');
   await page.click('button[data-confirm_modal="module-modal-confirm-' + dataTechName + '-disable"]').then(() => console.log('should click on "Disable" action from the dropdown list'));
   await page.waitFor(2000);
-  await page.waitForSelector('div.modal-footer > a.module_action_modal_disable[data-tech-name="' + dataTechName + '"]', { visible: true });
+  await page.waitForSelector('div.modal-footer > a.module_action_modal_disable[data-tech-name="' + dataTechName + '"]', {visible: true});
   await page.click('div.modal-footer > a.module_action_modal_disable[data-tech-name="' + dataTechName + '"]').then(() => console.log('should click on "Yes, disable it" button'));
   await page.waitFor(3000)
 };
