@@ -8,7 +8,7 @@ const {Dashboard} = require('../selectors/BO/dashboardPage');
 const {Menu} = require('../selectors/BO/menu');
 let fs = require('fs');
 let options = {
-  timeout: 30000,
+  timeout: 90000,
   headless: false,
   defaultViewport: {
     width: 0,
@@ -17,6 +17,7 @@ let options = {
   args: [`--window-size=${1280},${1024}`]
 };
 global.tab = [];
+global.selectedValue = [];
 
 class CommonClient {
 
@@ -280,15 +281,20 @@ class CommonClient {
   }
 
   stringifyNumber(number) {
-    let special = ['zeroth','first', 'second', 'third', 'fourth', 'fifth', 'sixth', 'seventh', 'eighth', 'ninth', 'tenth', 'eleventh', 'twelfth', 'thirteenth', 'fourteenth', 'fifteenth', 'sixteenth', 'seventeenth', 'eighteenth', 'nineteenth'];
+    let special = ['zeroth', 'first', 'second', 'third', 'fourth', 'fifth', 'sixth', 'seventh', 'eighth', 'ninth', 'tenth', 'eleventh', 'twelfth', 'thirteenth', 'fourteenth', 'fifteenth', 'sixteenth', 'seventeenth', 'eighteenth', 'nineteenth'];
     let deca = ['twent', 'thirt', 'fort', 'fift', 'sixt', 'sevent', 'eight', 'ninet'];
     if (number < 20) return special[number];
-    if (number%10 === 0) return deca[Math.floor(number/10)-2] + 'ieth';
-    return deca[Math.floor(number/10)-2] + 'y-' + special[number%10];
+    if (number % 10 === 0) return deca[Math.floor(number / 10) - 2] + 'ieth';
+    return deca[Math.floor(number / 10) - 2] + 'y-' + special[number % 10];
   }
 
   async closeWindow() {
     await page.close();
+  }
+
+  async getSelectedValue(selector, value) {
+    await page.waitForSelector(selector, {timeout: 90000});
+    selectedValue = await page.select(selector, value);
   }
 }
 

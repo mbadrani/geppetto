@@ -6,10 +6,14 @@ const product = require('../common_scenarios/catalog/product');
 
 let productData = {
   name: 'P1',
-  reference: 'P8710',
+  reference: 'P9469',
   quantity: '12',
   priceHT: '20',
   type: 'standard',
+  pictures: [
+    '1.png',
+    '2.jpg'
+  ]
 };
 
 scenario('This scenario is based on the bug described in this PR https://github.com/PrestaShop/PrestaShop/pull/9469', () => {

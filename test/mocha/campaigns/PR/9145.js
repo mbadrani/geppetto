@@ -10,14 +10,19 @@ const {AddProduct} = require('../../selectors/BO/catalog/products/addProduct');
 const preferences = require('../common_scenarios/shopParameters/preferences');
 
 let shopData = {
-  name: 'secondShop'
+  name: 'secondShop',
+  virtual_url: 'secondShop'
 };
 let productData = {
   name: 'P1',
   reference: 'PR123456789',
   quantity: "10",
-  priceHT: '50',
   type: 'combination',
+  priceHT: '50',
+  pictures: [
+    '1.png',
+    '2.jpg'
+  ],
   combinationsQuantities: {
     firstQuantity: '300',
     secondQuantity: '200'

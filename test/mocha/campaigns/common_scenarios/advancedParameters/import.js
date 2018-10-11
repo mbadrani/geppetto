@@ -1,6 +1,6 @@
 const {CommonBO} = require('../../../selectors/BO/commonBO');
 const {Menu} = require('../../../selectors/BO/menu');
-const {ImportPage} = require('../../../selectors/BO/configure/advancedParameters/importPage');
+const {ImportPage} = require('../../../selectors/BO/advancedParameters/importPage');
 
 module.exports = {
   async downloadSimpleFileCSV(fileName) {

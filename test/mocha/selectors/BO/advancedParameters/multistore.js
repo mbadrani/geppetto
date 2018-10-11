@@ -12,7 +12,7 @@ module.exports = {
     filter_reset_button: '#table-shop button[name="submitResetshop"]',
     edit_button: '#table-shop_group a.edit',
     MultistoreEditPage: {
-      virtual_uri_input: '#virtual_uri',
+      virtual_uri_input: 'input#virtual_uri',
       save_button: '#shop_url_form_submit_btn_1'
     },
     MultistoreTree: {

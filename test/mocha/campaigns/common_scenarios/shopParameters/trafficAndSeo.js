@@ -1,5 +1,5 @@
 const {Menu} = require('../../../selectors/BO/menu');
-const {TraficAndSeo} = require('../../../selectors/BO/configure/shopParameters/trafficAndSeoPage');
+const {TraficAndSeo} = require('../../../selectors/BO/shopParameters/trafficAndSeoPage');
 
 module.exports = {
   async disableOrEnableFriendlyUrl(enable = true) {
