@@ -12,7 +12,7 @@ module.exports = {
     StepThree: {
       system_compatibility_box: '#sheet_system > h3'
     },
-    StepFore: {
+    StepFour: {
       shop_name_input: '#infosShop',
       country_select: '#infosCountry_chosen',
       country_search_input: '#infosCountry_chosen > div > div > input[type="text"]',

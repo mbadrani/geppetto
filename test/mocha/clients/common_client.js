@@ -8,7 +8,7 @@ const {Dashboard} = require('../selectors/BO/dashboardPage');
 const {Menu} = require('../selectors/BO/menu');
 let fs = require('fs');
 let options = {
-  timeout: 90000,
+  timeout: 30000,
   headless: false,
   defaultViewport: {
     width: 0,
@@ -31,8 +31,9 @@ class CommonClient {
     return await pages[id];
   }
 
-  async switchWindow(id) {
+  async switchWindow(id, wait = 0) {
     await page.waitFor(5000, {waituntil: 'networkidle2'});
+    await this.waitFor(wait);
     page = await this.getPage(id);
     await page.bringToFront();
     await page._client.send('Emulation.clearDeviceMetricsOverride');
@@ -54,14 +55,14 @@ class CommonClient {
   }
 
   async accessToBO() {
-    await page.goto(global.URL + '/admin-dev');
+    await page.goto(global.URL + global.adminFolderName);
     await page._client.send('Emulation.clearDeviceMetricsOverride');
     await this.waitFor(Authentication.page_content);
   }
 
   async accessToFO(selector, id, wait = 4000) {
     await this.waitForAndClick(selector, wait);
-    await this.switchWindow(id);
+    await this.switchWindow(id, wait);
   }
 
   async openShopURL(param = '') {
@@ -258,8 +259,8 @@ class CommonClient {
     expect(exists).to.be.true;
   }
 
-  async isVisible(selector, wait = 0) {
-    await this.waitFor(wait);
+  async isVisible(selector, wait = 0, options = {}) {
+    await this.waitFor(wait, options);
     global.visible = await page.$(selector) !== null;
   }
 
@@ -294,7 +295,7 @@ class CommonClient {
 
   async getSelectedValue(selector, value) {
     await page.waitForSelector(selector, {timeout: 90000});
-    selectedValue = await page.select(selector, value);
+    global.selectedValue = await page.select(selector, value);
   }
 }
 

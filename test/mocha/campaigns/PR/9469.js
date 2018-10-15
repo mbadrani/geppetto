@@ -19,7 +19,6 @@ let productData = {
 scenario('This scenario is based on the bug described in this PR https://github.com/PrestaShop/PrestaShop/pull/9469', () => {
   authentication.signInBO('9469');
   product.createProduct(productData);
-
   scenario('Check that the block "Specific References" does not appear', client => {
     test('should go to the Front office', () => client.openShopURL());
     test('should search for the created product', async () => {

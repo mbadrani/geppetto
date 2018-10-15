@@ -15,7 +15,7 @@ const accessToBo = async () => {
     path: 'trace/9388.json',
     categories: ['devtools.timeline']
   });
-  await page.goto(global.URL + '/admin-dev');
+  await page.goto(global.URL + global.adminFolderName);
   await page._client.send('Emulation.clearDeviceMetricsOverride');
   await page.waitFor('body').then(() => console.log('should check that the authentication page is well opened'));
 };

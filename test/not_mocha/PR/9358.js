@@ -10,7 +10,7 @@ const checkSearchPage = async () => {
     categories: ['devtools.timeline']
   });
 
-  await page.goto(global.URL + '/admin-dev');
+  await page.goto(global.URL + global.adminFolderName);
   await page._client.send('Emulation.clearDeviceMetricsOverride');
   await page.waitFor('body');
   await page.type('#email', global.email);

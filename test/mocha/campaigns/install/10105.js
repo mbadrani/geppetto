@@ -2,19 +2,20 @@ const install = require('../common_scenarios/install');
 const {Install} = require('../../selectors/install');
 
 /** This scenario is based on the bug described in this PR
- * https://github.com/PrestaShop/PrestaShop/pull/10107
+ * https://github.com/PrestaShop/PrestaShop/pull/10105
  */
-scenario('PR-10107: Install shop with Uzbek language', () => {
+scenario('PR-10105: Install shop with Bosnian language', () => {
   scenario('Open the browser then access to install page', client => {
     test('should open the browser', async () => {
       await client.open();
-      await client.startTracing('10107');
+      await client.startTracing('10105');
     });
     test('should go to the install page', async () => {
       await client.openShopURL(global.installFolderName);
-      await client.waitFor(90000);
-      await client.getSelectedValue(Install.StepOne.language_select, 'uz');
-      await install.installShop('uz', global.selectedValue, true);
+      await client.waitFor(5000);
+      await client.getSelectedValue(Install.StepOne.language_select, 'bs').then(async () => {
+        await install.installShop('bs', selectedValue, true);
+      });
     });
   }, 'common_client');
 }, 'common_client');

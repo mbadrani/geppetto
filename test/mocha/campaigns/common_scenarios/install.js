@@ -1,13 +1,13 @@
 const {Install} = require('../../selectors/install');
 
 module.exports = {
-  async installShop(language = 'undefined', selectedValue, close = false) {
+  installShop(language = '', selectedValue, close = false) {
     scenario('Install new shop', client => {
-      const lang = language === 'undefined' ? global.language : language;
+      const lang = language === '' ? global.language : language;
       if (selectedValue.includes(lang)) {
         // Select language
         scenario('Step 1 : Choose your language', client => {
-          const lang = language === 'undefined' ? global.language : language;
+          const lang = language === '' ? global.language : language;
           test('should choose the language "' + lang.toUpperCase() + '" from the list', () => client.waitForAndSelect(Install.StepOne.language_select, lang, 2000));
           test('should click on "Next" button', () => client.waitForAndClick(Install.Common.next_button));
         }, 'common_client');
@@ -23,17 +23,17 @@ module.exports = {
         }, 'common_client');
         // Fill the store information form
         scenario('Step 4 : Store information', client => {
-          test('should set the "Name" input of shop', () => client.waitForAndType(Install.StepFore.shop_name_input, 'puppeteerDemo', 2000));
+          test('should set the "Name" input of shop', () => client.waitForAndType(Install.StepFour.shop_name_input, 'puppeteerDemo', 2000));
           test('should choose the "Country" from the dropdown list', async () => {
-            await client.waitForAndClick(Install.StepFore.country_select);
-            await client.waitForAndType(Install.StepFore.country_search_input, global.country);
-            await client.waitForAndClick(Install.StepFore.country_select);
+            await client.waitForAndClick(Install.StepFour.country_select);
+            await client.waitForAndType(Install.StepFour.country_search_input, global.country);
+            await client.waitForAndClick(Install.StepFour.country_select);
           });
-          test('should set the "Firstname" input', () => client.waitForAndType(Install.StepFore.firstname_input, global.firstName, 2000));
-          test('should set the "Lastname" input', () => client.waitForAndType(Install.StepFore.lastname_input, global.lastName, 2000));
-          test('should set the "Email" input', () => client.waitForAndType(Install.StepFore.email_input, global.email, 2000));
-          test('should set the "Password" input', () => client.waitForAndType(Install.StepFore.password_input, global.password, 2000));
-          test('should set the "Confirm password" input', () => client.waitForAndType(Install.StepFore.repeat_password_input, global.password, 2000));
+          test('should set the "Firstname" input', () => client.waitForAndType(Install.StepFour.firstname_input, global.firstName, 2000));
+          test('should set the "Lastname" input', () => client.waitForAndType(Install.StepFour.lastname_input, global.lastName, 2000));
+          test('should set the "Email" input', () => client.waitForAndType(Install.StepFour.email_input, global.email, 2000));
+          test('should set the "Password" input', () => client.waitForAndType(Install.StepFour.password_input, global.password, 2000));
+          test('should set the "Confirm password" input', () => client.waitForAndType(Install.StepFour.repeat_password_input, global.password, 2000));
           test('should click on "Next" button', () => client.waitForAndClick(Install.Common.next_button));
         }, 'common_client');
         // Fill the database configuration form
@@ -62,9 +62,9 @@ module.exports = {
         }, 'common_client');
       }
       else {
-        test('Language does not exist in the list', async () => {
+        test('should check the selected language', async () => {
+          await client.waitFor(4000);
           await expect(selectedValue.includes(lang), 'Failed to select the "' + lang.toUpperCase() + '" language !').to.be.true;
-          await client.closeWindow();
         });
       }
     }, 'common_client', close);

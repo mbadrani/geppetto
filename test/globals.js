@@ -21,6 +21,6 @@ global.downloadFileFolder = './test/mocha/downloads/';
 global.customerEmail = 'pub@prestashop.com';
 global.customerPassword = '123456789';
 global.dataFileFolder = './test/mocha/datas/';
-global.selectedLanguage = [];
+
 global.installFolderName = argv.INSTALL_FOLDER_NAME || '/install-dev';
 global.adminFolderName = argv.ADMIN_FOLDER_NAME || '/admin-dev';

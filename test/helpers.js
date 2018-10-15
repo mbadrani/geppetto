@@ -1,6 +1,7 @@
 const chai = require('chai');
 chai.use(require('chai-string'));
 global.expect = chai.expect;
+require('../test/globals');
 
 const takeScreenshot = async err => await this.client.screenshot('error').then(() => {
   throw err;

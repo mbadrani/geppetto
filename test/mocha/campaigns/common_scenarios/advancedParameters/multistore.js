@@ -60,7 +60,7 @@ module.exports = {
   async enableAndDisableShareAvailableQuantites(isEnable = false) {
     scenario((isEnable ? 'Disable' : 'Enable') + ' share available quantities between group stores', client => {
       test('should go to "Multistore" page', async () => {
-        await client.waitForAndClick(Menu.Configure.AdvancedParameters.advanced_parameters_menu, 2000);
+        await client.waitForAndClick(Menu.Configure.AdvancedParameters.advanced_parameters_menu, 4000);
         await client.waitForAndClick(Menu.Configure.AdvancedParameters.multistore_submenu, 2000);
       });
       test('should click on "Default" group', () => client.waitForAndClick(MultistorePage.MultistoreTree.default_group));

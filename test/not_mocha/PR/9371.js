@@ -29,7 +29,7 @@ const checkSearchPage = async () => {
   });
 
   /** Get the displayed product list in the Back office and compare the two results **/
-  await page.goto(global.URL + '/admin-dev').then(() => console.log('should go to the Back Office'));
+  await page.goto(global.URL + global.adminFolderName).then(() => console.log('should go to the Back Office'));
   await page.waitFor('body').then(() => console.log('should check that the authentication page is well opened'));
   await signInBo();
   await page.waitFor('#subtab-AdminCatalog', {visible: true});
