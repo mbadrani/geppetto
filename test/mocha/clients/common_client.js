@@ -17,6 +17,7 @@ let options = {
   args: [`--window-size=${1280},${1024}`]
 };
 global.tab = [];
+global.selectedValue = [];
 
 class CommonClient {
 
@@ -30,8 +31,9 @@ class CommonClient {
     return await pages[id];
   }
 
-  async switchWindow(id) {
+  async switchWindow(id, wait = 0) {
     await page.waitFor(5000, {waituntil: 'networkidle2'});
+    await this.waitFor(wait);
     page = await this.getPage(id);
     await page.bringToFront();
     await page._client.send('Emulation.clearDeviceMetricsOverride');
@@ -53,14 +55,14 @@ class CommonClient {
   }
 
   async accessToBO() {
-    await page.goto(global.URL + '/admin-dev');
+    await page.goto(global.URL + global.adminFolderName);
     await page._client.send('Emulation.clearDeviceMetricsOverride');
     await this.waitFor(Authentication.page_content);
   }
 
   async accessToFO(selector, id, wait = 4000) {
     await this.waitForAndClick(selector, wait);
-    await this.switchWindow(id);
+    await this.switchWindow(id, wait);
   }
 
   async openShopURL(param = '') {
@@ -257,8 +259,8 @@ class CommonClient {
     expect(exists).to.be.true;
   }
 
-  async isVisible(selector, wait = 0) {
-    await this.waitFor(wait);
+  async isVisible(selector, wait = 0, options = {}) {
+    await this.waitFor(wait, options);
     global.visible = await page.$(selector) !== null;
   }
 
@@ -280,15 +282,20 @@ class CommonClient {
   }
 
   stringifyNumber(number) {
-    let special = ['zeroth','first', 'second', 'third', 'fourth', 'fifth', 'sixth', 'seventh', 'eighth', 'ninth', 'tenth', 'eleventh', 'twelfth', 'thirteenth', 'fourteenth', 'fifteenth', 'sixteenth', 'seventeenth', 'eighteenth', 'nineteenth'];
+    let special = ['zeroth', 'first', 'second', 'third', 'fourth', 'fifth', 'sixth', 'seventh', 'eighth', 'ninth', 'tenth', 'eleventh', 'twelfth', 'thirteenth', 'fourteenth', 'fifteenth', 'sixteenth', 'seventeenth', 'eighteenth', 'nineteenth'];
     let deca = ['twent', 'thirt', 'fort', 'fift', 'sixt', 'sevent', 'eight', 'ninet'];
     if (number < 20) return special[number];
-    if (number%10 === 0) return deca[Math.floor(number/10)-2] + 'ieth';
-    return deca[Math.floor(number/10)-2] + 'y-' + special[number%10];
+    if (number % 10 === 0) return deca[Math.floor(number / 10) - 2] + 'ieth';
+    return deca[Math.floor(number / 10) - 2] + 'y-' + special[number % 10];
   }
 
   async closeWindow() {
     await page.close();
+  }
+
+  async getSelectedValue(selector, value) {
+    await page.waitForSelector(selector, {timeout: 90000});
+    global.selectedValue = await page.select(selector, value);
   }
 }
 

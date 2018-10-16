@@ -6,16 +6,19 @@ const product = require('../common_scenarios/catalog/product');
 
 let productData = {
   name: 'P1',
-  reference: 'P8710',
+  reference: 'P9469',
   quantity: '12',
   priceHT: '20',
   type: 'standard',
+  pictures: [
+    '1.png',
+    '2.jpg'
+  ]
 };
 
 scenario('This scenario is based on the bug described in this PR https://github.com/PrestaShop/PrestaShop/pull/9469', () => {
   authentication.signInBO('9469');
   product.createProduct(productData);
-
   scenario('Check that the block "Specific References" does not appear', client => {
     test('should go to the Front office', () => client.openShopURL());
     test('should search for the created product', async () => {

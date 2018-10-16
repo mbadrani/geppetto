@@ -11,9 +11,8 @@ let productData = {
 };
 
 
-scenario('This scenario is based on the bug described in this PR: https://github.com/PrestaShop/PrestaShop/pull/9466', client => {
+scenario('This scenario is based on the bug described in this PR: https://github.com/PrestaShop/PrestaShop/pull/9466', () => {
   authentication.signInBO('9466');
-
   scenario('Create a new product in the Back Office', client => {
     test('should go to "Catalog" page', async () => {
       await client.waitForAndClick(Menu.Sell.Catalog.catalog_menu);
@@ -25,10 +24,9 @@ scenario('This scenario is based on the bug described in this PR: https://github
     test('should set the "Quantity" input', () => client.clearInputAndSetValue(AddProduct.Basic_settings.quantity_input, productData.quantity));
     test('should set the "Price" input', () => client.clearInputAndSetValue(AddProduct.Basic_settings.price_input, productData.priceHT));
     test('should close the symfony toolbar', async () => {
-      await page.waitFor(2000);
-      const exist = await page.$(AddProduct.symfony_toolbar, {visible: true});
-      if (exist !== null) {
-        await page.click(AddProduct.symfony_toolbar);
+      await client.isVisible(AddProduct.symfony_toolbar, 7000);
+      if (visible) {
+        await client.waitForAndClick(AddProduct.symfony_toolbar);
       }
     });
     test('should click on "Online"', () => client.waitForAndClick(AddProduct.online_switcher));
@@ -36,8 +34,8 @@ scenario('This scenario is based on the bug described in this PR: https://github
       test('should select the "Product with combination" radio button', () => client.waitForAndClick(AddProduct.Basic_settings.combination_radio_button));
       test('should go to "Combinations" tab', () => client.waitForAndClick(AddProduct.quantity_combination_tab));
       test('should choose the combinations', async () => {
-        await client.waitForAndClick(AddProduct.Combination.combination_size_s, 1000);
-        await client.waitForAndClick(AddProduct.Combination.combination_size_m, 1000);
+        await client.waitForAndClick(AddProduct.Combination.attribute_size_checkbox_button.replace('%ID', 1), 1000);
+        await client.waitForAndClick(AddProduct.Combination.attribute_size_checkbox_button.replace('%ID', 2), 1000);
       });
       test('should click on "Generate" button', async () => {
         await client.checkBrowserMessage('');
@@ -48,10 +46,11 @@ scenario('This scenario is based on the bug described in this PR: https://github
         await client.waitForAndClick(AddProduct.close_validation_button);
       });
     }, 'common_client');
-
-    test('should click on "Save" button', () => client.waitForAndClick(AddProduct.save_button));
-    test('should check and close the green validation', () => client.waitForAndClick(AddProduct.close_validation_button));
+    test('should click on "Save" button', () => client.waitForAndClick(AddProduct.save_button, 3000));
+    test('should check and close the green validation', async () => {
+      await client.waitForAndClick(AddProduct.close_validation_button);
+      await client.waitFor(5000);
+    });
   }, 'common_client');
-
-    authentication.signOutBO();
-  }, 'common_client', true);
+  authentication.signOutBO();
+}, 'common_client', true);

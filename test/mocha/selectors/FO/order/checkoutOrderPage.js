@@ -11,7 +11,8 @@ module.exports = {
     shipping_method_option:'#delivery_option_2',
     payment_method_option:'#payment-option-2',
     condition_check_box:'#conditions_to_approve\\5b terms-and-conditions\\5d',
-    confirmation_order_button:'#payment-confirmation button'
+    confirmation_order_button:'#payment-confirmation button',
+    cart_product_no_item: '#main div.cart-overview.js-cart > span.no-items'
   }
 };
 

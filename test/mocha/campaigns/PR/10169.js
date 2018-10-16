@@ -1,6 +1,7 @@
 const authentication = require('../common_scenarios/authentication');
 const product = require('../common_scenarios/catalog/product');
 const {AddProduct} = require('../../selectors/BO/catalog/products/addProduct');
+const onBoarding = require('../common_scenarios/onboarding');
 
 let productData = {
   name: 'P1',
@@ -20,6 +21,7 @@ let productData = {
 
 scenario('PR-10169: Check that the images is well displayed in the edit combination', () => {
   authentication.signInBO('10169');
+  onBoarding.closeOnBoardingModal();
   product.createProduct(productData);
   scenario('Check the appearance of images in edit combination page', client => {
     test('should click on "Edit" icon', async () => {

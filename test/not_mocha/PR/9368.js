@@ -5,7 +5,7 @@ chai.use(require('chai-string'));
 const expect = chai.expect;
 
 const open = async () => {
-  global.browser = await puppeteer.launch({headless: false, args: [`--window-size=${1500},${2000}`]});
+  global.browser = await puppeteer.launch({headless: false, args: [`--window-size=${1280},${1024}`]});
 };
 
 const accessToFo = async () => {
@@ -16,7 +16,7 @@ const accessToFo = async () => {
     categories: ['devtools.timeline']
   });
   await page.goto(global.URL).then(() => console.log('should go to the Front Office'));
-  await page.setViewport({width: 1500, height: 2000});
+  await page._client.send('Emulation.clearDeviceMetricsOverride');
   await page.waitFor('body').then(() => console.log('should check that the page is well opened'));
 };
 

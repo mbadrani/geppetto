@@ -1,7 +1,7 @@
 module.exports = {
   TranslationsPage: {
-    translations_languages_select: '#translations-languages',
-    modify_button: '#modify-translations',
+    translations_languages_select: '#form_modify_translations_language',
+    modify_button: 'form[name="modify_translations"] button',
     search_input: '#search input[placeholder*="Search"]',
     search_button: '#search button',
     gift_options_textarea: '#app div.translations-catalog textarea',

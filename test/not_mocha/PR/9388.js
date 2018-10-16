@@ -15,8 +15,8 @@ const accessToBo = async () => {
     path: 'trace/9388.json',
     categories: ['devtools.timeline']
   });
-  await page.goto(global.URL + '/admin-dev');
-  await page.setViewport({width: 0, height: 0});
+  await page.goto(global.URL + global.adminFolderName);
+  await page._client.send('Emulation.clearDeviceMetricsOverride');
   await page.waitFor('body').then(() => console.log('should check that the authentication page is well opened'));
 };
 
@@ -90,9 +90,9 @@ const addSpecificPrice = async (productData) => {
 
 const checkSpecificPrice = async () => {
   await page.waitFor('table[id*="js-specific-price-list"]').then(() => console.log('should check the existence of the "Price list"'));
-  await page.waitFor('a[class*="specific-price-edit btn"]');
-  await page.click('a[class*="specific-price-edit btn"]').then(() => console.log('should click on the "Edit" icon'));
-  await page.waitFor('div[id*="specific_price_form"]').then(() => console.log('should check the existence of the "Specific price conditions table"'));
+  await page.waitFor('#js-specific-price-list a[class*="edit"]');
+  await page.click('#js-specific-price-list a[class*="edit"]').then(() => console.log('should click on the "Edit" icon'));
+  await page.waitFor('#edit-specific-price-modal-form').then(() => console.log('should check the existence of the "Specific price conditions form"'));
 };
 
 let productData = {

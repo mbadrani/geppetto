@@ -1,7 +1,7 @@
 const {Menu} = require('../../selectors/BO/menu');
 const authentication = require('../common_scenarios/authentication');
 const translations = require('../common_scenarios/improve/international/translations');
-const {OrderSettingsPage} = require('../../selectors/BO/configure/shopParameters/orderSettingsPage');
+const {OrderSettingsPage} = require('../../selectors/BO/shopParameters/orderSettingsPage');
 
 /** This scenario is based on the bug described in this PR
  * https://github.com/PrestaShop/PrestaShop/pull/9095
