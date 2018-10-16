@@ -16,7 +16,11 @@ module.exports = {
       reference_input: '#form_step6_reference',
       quantity_input: '#form_step1_qty_0_shortcut',
       price_input: '#form_step1_price_shortcut',
-      files_input: 'input.dz-hidden-input[type="file"]'
+      files_input: 'input.dz-hidden-input[type="file"]',
+      add_feature_button: '#add_feature_button',
+      feature_select_button: '#select2-form_step1_features_%ID_feature-container',
+      feature_select_option: '#select2-form_step1_features_%ID_feature-results li:nth-child(%OPTION)',
+      predefined_value_select: '#form_step1_features_%ID_value:not(disabled)'
     },
 
     Combination: {
