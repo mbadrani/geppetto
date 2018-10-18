@@ -23,13 +23,14 @@ module.exports = {
    *  },
    *  quantities: {
    *   availability: 'Availability preferences (default, allow orders, deny orders)' (optional)
+   *   minimal_quantity: 'Minimum quantity for sale' (optional)
    *  }
    *
    * };
    */
   async createProduct(productData) {
     scenario('Create a new product in the Back Office', client => {
-      test('should go to "Catalog" page', async() => {
+      test('should go to "Catalog" page', async () => {
         await client.waitForAndClick(Menu.Sell.Catalog.catalog_menu);
         await client.waitForAndClick(Menu.Sell.Catalog.products_submenu, 1000);
       });
@@ -48,7 +49,8 @@ module.exports = {
           await client.waitForAndClick(CommonBO.symfony_toolbar_close_button);
         }
       });
-      test('should click on "Online"', () => client.waitForAndClick(AddProduct.online_switcher));
+      test('should click on "Online"', () => client.waitForAndClick(AddProduct.online_switcher, 3000));
+      test('should check and close the green validation', () => client.waitForAndClick(AddProduct.close_validation_button));
 
       if (productData.type === 'standard') {
         test('should click on "Simple product" radio button', () => client.waitForAndClick(AddProduct.Basic_settings.simple_product_radio_button, 2000));
@@ -97,11 +99,14 @@ module.exports = {
           if (productData.quantities.hasOwnProperty('availability') && productData.quantities.availability === 'default') {
             test('should check "Default behaviour" radio button', () => client.waitForAndClick(AddProduct.Quantity.default_behaviour_radio_button));
           }
+          if(productData.quantities.hasOwnProperty('minimal_quantity')) {
+            test('should set the "Minimum quantity for sale" input', () => client.waitForAndSetValue(AddProduct.Quantity.minimal_quantity_input, productData.quantities.minimal_quantity, 2000));
+          }
         }, 'catalog/product');
       }
 
       scenario('Save the product then close the green validation', client => {
-        test('should click on "Save" button', () => client.waitForAndClick(AddProduct.save_button));
+        test('should click on "Save" button', () => client.waitForAndClick(AddProduct.save_button, 10000));
         test('should check and close the green validation', async() => {
           await client.checkTextValue(AddProduct.validation_msg, 'Settings updated.');
           await client.waitForAndClick(AddProduct.close_validation_button);
@@ -131,7 +136,7 @@ module.exports = {
       test('should click on "Proceed to checkout" button', () => client.waitForAndClick(ProductPageFO.proceed_to_checkout_modal_button, 2000));
       test('should click on "Product customization" link', () => client.waitForAndClick(ProductPageFO.product_customization_link, 2000));
       test('should check that the customization value in the pop-up is equal to "' + productData.options.customization + '"', () => client.checkTextValue(ProductPageFO.customizationvalue, productData.options.customization, 'equal', 2000));
-      test('should check that the customization message pop-up is equal to "' + message + '"', async() => {
+      test('should check that the customization message pop-up is equal to "' + message + '"', async () => {
         await client.checkTextValue(ProductPageFO.customization_message, message, 'equal', 2000);
         await client.switchWindow(0);
       });

@@ -33,6 +33,7 @@ module.exports = {
 
     Quantity: {
       default_behaviour_radio_button: '#form_step3_out_of_stock_2',
+      minimal_quantity_input: '#form_step3_minimal_quantity'
     },
 
     Options: {
