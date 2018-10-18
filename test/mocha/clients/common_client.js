@@ -297,6 +297,12 @@ class CommonClient {
     await page.waitForSelector(selector, {timeout: 90000});
     global.selectedValue = await page.select(selector, value);
   }
+
+  async checkSelectedValue(selector, textToCheckWith, wait = 0) {
+    await this.waitFor(wait);
+    await this.waitFor(selector);
+    await page.$eval(selector + ' > option[selected]', el => el.innerText).then((text) => expect(text).to.equal(textToCheckWith));
+  }
 }
 
 module.exports = CommonClient;
