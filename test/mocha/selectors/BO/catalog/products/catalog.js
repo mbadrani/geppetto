@@ -14,6 +14,9 @@ module.exports = {
     get product_checkbox_button() {
       return this.product_table + ' tbody tr:nth-child(%ID) td:nth-child(1)';
     },
+    get product_checkbox_input() {
+      return this.product_table + ' tbody tr:nth-child(%ID) td:nth-child(1) input';
+    },
     get product_id() {
       return this.product_table + ' tbody tr:nth-child(%ID) td:nth-child(2) > label';
     },
