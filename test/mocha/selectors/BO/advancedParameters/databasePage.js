@@ -28,5 +28,8 @@ module.exports = {
     get sql_query_dropdown_action() {
       return this.sql_manager_table + ' tr:nth-child(%S) > td:nth-child(5) a.delete';
     }
+  },
+  DbBackupPage: {
+    db_backup_table: '#backup_grid_panel'
   }
 };

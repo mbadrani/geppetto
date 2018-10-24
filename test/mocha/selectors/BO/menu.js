@@ -116,7 +116,8 @@ module.exports = {
         database_submenu: '#subtab-AdminParentRequestSql',
         logs_submenu: '#subtab-AdminLogs',
         webservice_submenu: '#subtab-AdminWebservice',
-        multistore_submenu: '#subtab-AdminShopGroup'
+        multistore_submenu: '#subtab-AdminShopGroup',
+        db_backup_tab: '#subtab-AdminBackup',
       }
     }
   }
