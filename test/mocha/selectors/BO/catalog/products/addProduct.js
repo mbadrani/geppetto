@@ -8,6 +8,8 @@ module.exports = {
     symfony_toolbar: 'a[title="Close Toolbar"]',
     close_validation_button: '.growl-close',
     validation_msg: '#growls-default > .growl-notice > .growl-message:not(:empty)',
+    preview_button: '#product_form_preview_btn',
+    preview_link: 'body > a',
 
     Basic_settings: {
       name_input: '#form_step1_name_1',
@@ -39,6 +41,8 @@ module.exports = {
     Options: {
       add_customization_button: '#custom_fields > a',
       customization_input: '#form_step6_custom_fields_0_label_1',
+      attach_new_file_button: '#step6 a.mb-3',
+      attachment_file: '#form_step6_attachment_product_file'
     }
   }
 };
