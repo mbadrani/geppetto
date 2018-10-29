@@ -312,6 +312,13 @@ class CommonClient {
     await this.waitFor(selector);
     await page.$eval(selector + ' > option[selected]', el => el.innerText).then((text) => expect(text).to.equal(textToCheckWith));
   }
+
+  async checkValidationInput(selector, textToCheckWith) {
+    await this.waitFor(selector);
+    await page.$eval(selector, (el) => el.title).then((title) => {
+      expect(title).to.equal(textToCheckWith);
+    });
+  }
 }
 
 module.exports = CommonClient;
