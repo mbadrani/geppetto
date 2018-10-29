@@ -361,6 +361,12 @@ class CommonClient {
         break;
     }
   }
+
+  async getAttributeInVar(selector, attribute, globalVar, wait = 0) {
+    await this.waitFor(wait);
+    await this.waitFor(selector);
+    await page.$eval(selector, (el, attribute) => el.getAttribute(attribute), attribute).then((variable) => global.tab[globalVar] = variable);
+  }
 }
 
 module.exports = CommonClient;
