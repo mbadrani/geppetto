@@ -28,7 +28,8 @@ module.exports = {
       combination_tr: '#accordion_combinations > tr:nth-child(%POS)',
       edit_combination_icon: '#attribute_%ID > td.attribute-actions a',
       combination_image: '#combination_%ID_id_image_attr > div:nth-child(%POS) > img',
-      combination_image_number: '#combination_form_%ID small.number-of-images'
+      combination_image_number: '#combination_form_%ID small.number-of-images',
+      attribute_color_label:'#attribute-group-2 span[style="background-color: %D"]'
     },
 
     Quantity: {
