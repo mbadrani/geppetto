@@ -346,6 +346,21 @@ class CommonClient {
       expect(isSelected).to.be.true;
     })
   }
+
+  async checkTextareaValue(selector, textToCheckWith, parameter = 'equal', wait = 0) {
+    switch (parameter) {
+      case "equal":
+        await this.waitFor(wait);
+        await this.waitFor(selector);
+        await page.$eval(selector, el => el.value).then((text) => expect(text).to.equal(textToCheckWith));
+        break;
+      case "contain":
+        await this.waitFor(wait);
+        await this.waitFor(selector);
+        await page.$eval(selector, el => el.value).then((text) => expect(text).to.contain(textToCheckWith));
+        break;
+    }
+  }
 }
 
 module.exports = CommonClient;
