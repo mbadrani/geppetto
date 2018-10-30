@@ -339,6 +339,13 @@ class CommonClient {
       global.tab[globalVar] = text;
     });
   }
+
+  async isSelected(selector, wait = 0) {
+    await this.waitFor(wait);
+    await page.$eval(selector, el => el.checked).then((isSelected) => {
+      expect(isSelected).to.be.true;
+    })
+  }
 }
 
 module.exports = CommonClient;
