@@ -1,6 +1,8 @@
 'use strict';
 let argv = require('minimist')(process.argv.slice(2));
+let path = require('path');
 
+global._projectdir = path.join(__dirname, '..');
 global.dateTime = new Date().getTime();
 global.firstName = 'Demo';
 global.lastName = 'Prestashop';
@@ -24,3 +26,6 @@ global.dataFileFolder = './test/mocha/datas/';
 
 global.installFolderName = argv.INSTALL_FOLDER_NAME || '/install-dev';
 global.adminFolderName = argv.ADMIN_FOLDER_NAME || '/admin-dev';
+
+global.mongoUrl = argv.MONGO_URL;
+global.mongoDatabase = argv.MONGO_DATABASE;
