@@ -60,6 +60,9 @@ module.exports = {
       return '#bulk_edition_save_keep';
     },
     success_message: 'div.alert-success div.alert-text',
-    success_close_button: 'div.alert-success button.close'
+    success_close_button: 'div.alert-success button.close',
+    expand_action: '#product_catalog_category_tree_filter_expand',
+    collapse_action: '#product_catalog_category_tree_filter_collapse',
+    check_tree: '#product_categories_categories > ul > li'
   }
 };
